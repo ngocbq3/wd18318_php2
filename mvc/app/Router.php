@@ -26,6 +26,18 @@ class Router
     {
         $method = $this->getMethod();
         $path = str_replace(ROOT_URI, "/", $_SERVER['REQUEST_URI']);
-        echo $path;
+
+        $callback = false;
+        if (isset(static::$routes[$method][$path])) {
+            $callback = static::$routes[$method][$path];
+        }
+        if ($callback === false) {
+            echo "404 FILE NOT FOUND";
+            die;
+        }
+        //Nếu $callback là 1 hàm
+        if (is_callable($callback)) {
+            return $callback();
+        }
     }
 }

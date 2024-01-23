@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        const players1 = ['a', 'b', 'c', 'd'];
+
+        [gk, ...players] = players1;
+
+        console.log(gk);
+        console.log(players);
+
+        const res = { blog: 'abc.com', type: 'javascript' }
+        const { blog, type } = res;
+        console.log(blog, type);//abc.com, javascript
+    </script>
+</body>
+
+</html>

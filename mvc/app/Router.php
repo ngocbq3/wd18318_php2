@@ -27,6 +27,13 @@ class Router
         $method = $this->getMethod();
         $path = str_replace(ROOT_URI, "/", $_SERVER['REQUEST_URI']);
 
+        //Tìm vị trí có dấu ?
+        $position = strpos($path, "?");
+        //Nếu tìm thấy
+        if ($position) {
+            $path = substr($path, 0, $position);
+        }
+
         $callback = false;
         if (isset(static::$routes[$method][$path])) {
             $callback = static::$routes[$method][$path];
@@ -38,6 +45,11 @@ class Router
         //Nếu $callback là 1 hàm
         if (is_callable($callback)) {
             return $callback();
+        }
+        //Kiểm xem $callback có phải là mảng không
+        if (is_array($callback)) {
+            $callback[0] = new $callback[0];
+            return call_user_func($callback);
         }
     }
 }

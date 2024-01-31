@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\HomeController;
+use App\Controllers\ProductController;
 use App\Router;
 
 require_once __DIR__ . "/env.php";
@@ -15,15 +16,12 @@ Router::get("/", function () {
 });
 Router::get("/home", [HomeController::class, 'index']);
 Router::get("/detail", [HomeController::class, 'detail']);
+
 Router::get("/about", function () {
     echo "ABOUT PAGE";
 });
-Router::get("/product/create", function () {
-    echo "PRODUCT CREATE PAGE";
-});
-Router::post("/product/create", function () {
-    echo "PRODUCT CREATE PAGE";
-});
-
+Router::get("/product/list", [ProductController::class, 'index']);
+Router::get("/product/create", [ProductController::class, 'create']);
+Router::post("/product/create", [ProductController::class, 'store']);
 
 $router->resolve();

@@ -45,4 +45,16 @@ class ProductController extends BaseController
         header("location:" . ROOT_PATH . "product/list");
         die;
     }
+
+    //Hiển thị form Edit để cập nhật
+    public function edit()
+    {
+        $id = $_GET['id'];
+        $product = ProductModel::find($id);
+        $categories = CategoryModel::all();
+        return $this->view(
+            "admin/products/edit",
+            ['product' => $product, 'categories' => $categories]
+        );
+    }
 }

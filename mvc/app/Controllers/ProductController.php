@@ -11,9 +11,11 @@ class ProductController extends BaseController
     public function index()
     {
         $products = ProductModel::all();
+        //lấy thông tin message
+        $message = $_COOKIE['message'] ?? '';
         return $this->view(
             "admin/products/list",
-            ['products' => $products]
+            ['products' => $products, 'message' => $message]
         );
     }
 
@@ -42,8 +44,7 @@ class ProductController extends BaseController
         $data['image'] = $pathImage;
         //thêm dữ liệu vào database
         ProductModel::insert($data);
-        header("location:" . ROOT_PATH . "product/list");
-        die;
+        redirect("product/list");
     }
 
     //Hiển thị form Edit để cập nhật
@@ -56,5 +57,30 @@ class ProductController extends BaseController
             "admin/products/edit",
             ['product' => $product, 'categories' => $categories]
         );
+    }
+    //Cập nhật dữ liệu
+    public function update()
+    {
+        $data = $_POST;
+
+        $file = $_FILES['image'];
+        if ($file['size'] > 0) {
+            $pathImage = "images/" . $file['name'];
+            move_uploaded_file($file['tmp_name'], $pathImage);
+            $data['image'] = $pathImage;
+        }
+        //Cập nhật DL
+        ProductModel::update($data['id'], $data);
+        //Quay lại form edit
+        redirect("product/edit?id=" . $data['id']);
+    }
+
+    //Xóa sản phẩm
+    public function delete()
+    {
+        $id = $_GET['id'];
+        ProductModel::delete($id);
+        setcookie("message", "Xóa dữ liệu thành công", time() + 1);
+        redirect("product/list");
     }
 }

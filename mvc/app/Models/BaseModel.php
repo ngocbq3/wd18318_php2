@@ -90,7 +90,7 @@ class BaseModel
         $model = new static;
         $model->sqlBuilder = "DELETE FROM $model->tableName WHERE id=:id";
         $stmt = $model->conn->prepare($model->sqlBuilder);
-        $stmt->execute();
+        $stmt->execute(['id' => $id]);
     }
 
     /**

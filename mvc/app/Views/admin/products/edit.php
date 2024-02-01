@@ -21,5 +21,5 @@
     Chi tiết sản phẩm <br>
     <textarea name="detail" id="" cols="100" rows="10"><?= $product->detail ?></textarea>
     <br><input type="hidden" name="id" value="<?= $product->id ?>">
-    <button type="submit">Thêm</button>
+    <button type="submit">Cập nhật</button>
 </form>
